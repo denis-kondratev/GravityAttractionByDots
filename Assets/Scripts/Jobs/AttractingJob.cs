@@ -11,32 +11,31 @@ namespace GravityAttraction
     {
         [ReadOnly] public int BodyCount;
         [ReadOnly] public NativeArray<Mass> Masses;
-        [ReadOnly] public NativeArray<LocalToWorldTransform> Transforms;
+        [ReadOnly] public NativeArray<LocalTransform> Transforms;
         [ReadOnly] public float FixedDeltaTime;
         [ReadOnly] public float MinDistance;
         [ReadOnly] public float GravitationalConstant;
 
         [BurstCompile]
         public void Execute(
-            [EntityInQueryIndex] int index,
+            [EntityIndexInQuery] int index,
             ref Velocity velocity,
-            in LocalToWorldTransform transform,
             in Mass mass)
         {
             if (mass.Value <= 0) return;
             
             var force = float3.zero;
-            var position = transform.Value.Position;
+            var position = Transforms[index].Position;
 
             for (var i = 0; i < BodyCount; i++)
             {
                 if (index == i) continue;
 
-                var distance = math.distance(position, Transforms[i].Value.Position);
+                var distance = math.distance(position, Transforms[i].Position);
                 
                 if (distance < MinDistance) continue;
                 
-                force += GravitationalConstant * mass.Value * Masses[i].Value * (Transforms[i].Value.Position - position) 
+                force += GravitationalConstant * mass.Value * Masses[i].Value * (Transforms[i].Position - position) 
                          / (distance * distance * distance);
             }
             

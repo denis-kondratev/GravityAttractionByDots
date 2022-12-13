@@ -19,7 +19,7 @@ namespace GravityAttraction
         public void OnCreate(ref SystemState state)
         {
             _query = new EntityQueryBuilder(Allocator.TempJob)
-                .WithAll<LocalToWorldTransform, Velocity>()
+                .WithAll<LocalTransform, Velocity>()
                 .WithAllRW<Mass>()
                 .Build(ref state);
             
@@ -33,7 +33,7 @@ namespace GravityAttraction
         
         public void OnUpdate(ref SystemState state)
         {
-            var transforms = _query.ToComponentDataArray<LocalToWorldTransform>(Allocator.TempJob);
+            var transforms = _query.ToComponentDataArray<LocalTransform>(Allocator.TempJob);
             var collisions = new NativeList<int2>(transforms.Length, Allocator.TempJob);
 
             var collisionDetectingJob = new CollisionDetectingJob
@@ -71,19 +71,19 @@ namespace GravityAttraction
                 
                 if (m2 <= 0) continue;
 
-                var uniformScaleTransform = transforms[collision.x].Value;
+                var transform = transforms[collision.x];
                 var v1 = SystemAPI.GetComponent<Velocity>(entity1).Value;
                 var v2 = SystemAPI.GetComponent<Velocity>(entity2).Value;
-                var p1 = uniformScaleTransform.Position;
-                var p2 = transforms[collision.y].Value.Position;
+                var p1 = transform.Position;
+                var p2 = transforms[collision.y].Position;
                 var mass = m1 + m2;
                 var velocity = (v1 * m1 + v2 * m2) / mass;
-                uniformScaleTransform.Position = (p1 * m1 + p2 * m2) / mass;
+                transform.Position = (p1 * m1 + p2 * m2) / mass;
                 
                 SystemAPI.SetComponent(entity2, _m0);
                 SystemAPI.SetComponent(entity1, new Mass { Value = mass });
                 SystemAPI.SetComponent(entity1, new Velocity { Value = velocity});
-                SystemAPI.SetComponent(entity1, new LocalToWorldTransform { Value = uniformScaleTransform});
+                SystemAPI.SetComponent(entity1, transform);
             }
 
             transforms.Dispose();

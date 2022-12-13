@@ -1,5 +1,4 @@
-﻿using Unity.Burst;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 
@@ -13,7 +12,7 @@ namespace GravityAttraction
         public void OnCreate(ref SystemState state)
         {
             _query = new EntityQueryBuilder(Allocator.TempJob)
-                .WithAll<LocalToWorldTransform, Mass>()
+                .WithAll<LocalTransform, Mass>()
                 .Build(ref state);
         }
 
@@ -30,7 +29,7 @@ namespace GravityAttraction
             {
                 BodyCount = _query.CalculateEntityCount(),
                 Masses = _query.ToComponentDataArray<Mass>(Allocator.TempJob),
-                Transforms = _query.ToComponentDataArray<LocalToWorldTransform>(Allocator.TempJob),
+                Transforms = _query.ToComponentDataArray<LocalTransform>(Allocator.TempJob),
                 FixedDeltaTime = SystemAPI.Time.fixedDeltaTime,
                 MinDistance = worldConfig.MinDistanceToAttract,
                 GravitationalConstant = worldConfig.GravitationalConstant

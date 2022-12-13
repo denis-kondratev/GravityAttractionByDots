@@ -35,7 +35,7 @@ namespace GravityAttraction
                 SqrtWorldRadius = sqrtWorldRadius
             };
 
-            job.ScheduleParallel();
+            job.Run();
             
             state.Enabled = false;
         }

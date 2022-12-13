@@ -170,16 +170,16 @@ MonoBehaviour:
   BodyPrefab: {fileID: 6569170085077419391, guid: 14f1e13bb72cff24597debc09a2ffc25,
     type: 3}
   WorldConfig:
-    BodyCount: 30000
-    WorldRadius: 6
+    BodyCount: 5000
+    WorldRadius: 5
     StartMaxAngularSpeed: 2
     StartSpeedRange:
-      x: 0.4
+      x: 1
       y: 1
     StartMassRange:
-      x: 0.1
-      y: 0.5
-    GravitationalConstant: 0.001
+      x: 0.5
+      y: 1
+    GravitationalConstant: 0.005
     MinDistanceToAttract: 0.1
     MassToSizeFactor: 0.05
-    CollisionDistanceFactor: 0.1
+    CollisionDistanceFactor: 0.2

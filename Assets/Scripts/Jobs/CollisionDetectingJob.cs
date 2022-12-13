@@ -10,7 +10,7 @@ namespace GravityAttraction
     public partial struct CollisionDetectingJob : IJobParallelFor
     {
         [ReadOnly] public int EntityCount;
-        [ReadOnly] public NativeArray<LocalToWorldTransform> Transforms;
+        [ReadOnly] public NativeArray<LocalTransform> Transforms;
         public NativeList<int2>.ParallelWriter Collisions;
         [ReadOnly] public float CollisionDistanceFactor;
 
@@ -19,9 +19,9 @@ namespace GravityAttraction
         {
             for (var i = index + 1; i < EntityCount; i++)
             {
-                var sizeQ = Transforms[i].Value.Scale * Transforms[i].Value.Scale
-                            + Transforms[index].Value.Scale * Transforms[index].Value.Scale;
-                var distanceQ = math.distancesq(Transforms[i].Value.Position, Transforms[index].Value.Position);
+                var sizeQ = Transforms[i].Scale * Transforms[i].Scale
+                            + Transforms[index].Scale * Transforms[index].Scale;
+                var distanceQ = math.distancesq(Transforms[i].Position, Transforms[index].Position);
 
                 if (distanceQ < sizeQ * CollisionDistanceFactor)
                 {

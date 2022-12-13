@@ -10,12 +10,12 @@ namespace GravityAttraction
         public float MassToSizeFactor;
         
         public void Execute(
-            ref LocalToWorldTransform transform, 
+            ref LocalTransform transform, 
             in Velocity velocity, 
             in Mass mass)
         {
-            transform.Value.Position += velocity.Value * DeltaTime;
-            transform.Value.Scale = math.pow(mass.Value, 1f/3f) * MassToSizeFactor;
+            transform.Position += velocity.Value * DeltaTime;
+            transform.Scale = math.pow(mass.Value, 1f/3f) * MassToSizeFactor;
         }
     }
 }

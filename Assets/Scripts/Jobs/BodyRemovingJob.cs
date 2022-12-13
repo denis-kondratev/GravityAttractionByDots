@@ -9,7 +9,7 @@ namespace GravityAttraction
         public EntityCommandBuffer.ParallelWriter Buffer;
         
         [BurstCompile]
-        public void Execute([EntityInQueryIndex] int entityIndex, in Entity entity, in Mass mass)
+        public void Execute([EntityIndexInQuery] int entityIndex, in Entity entity, in Mass mass)
         {
             if (mass.Value <= 0)
             {
