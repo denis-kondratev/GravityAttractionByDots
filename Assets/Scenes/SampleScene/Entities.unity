@@ -171,15 +171,14 @@ MonoBehaviour:
     type: 3}
   WorldConfig:
     BodyCount: 5000
-    WorldRadius: 5
-    StartMaxAngularSpeed: 2
+    WorldRadius: 6
     StartSpeedRange:
-      x: 1
-      y: 1
+      x: 0.5
+      y: 1.5
     StartMassRange:
       x: 0.5
       y: 1
     GravitationalConstant: 0.005
-    MinDistanceToAttract: 0.1
-    MassToSizeFactor: 0.05
-    CollisionDistanceFactor: 0.2
+    MinDistanceToAttract: 0.05
+    MassToScaleRatio: 0.05
+    CollisionFactor: 0.2

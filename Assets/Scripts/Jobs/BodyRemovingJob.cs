@@ -6,14 +6,14 @@ namespace GravityAttraction
     [BurstCompile]
     public partial struct BodyRemovingJob : IJobEntity
     {
-        public EntityCommandBuffer.ParallelWriter Buffer;
+        public EntityCommandBuffer.ParallelWriter CommandBuffer;
         
         [BurstCompile]
-        public void Execute([EntityIndexInQuery] int entityIndex, in Entity entity, in Mass mass)
+        private void Execute([EntityIndexInQuery] int index, in Entity entity, in Mass mass)
         {
             if (mass.Value <= 0)
             {
-                Buffer.DestroyEntity(entityIndex, entity);
+                CommandBuffer.DestroyEntity(index, entity);
             }
         }
     }

@@ -4,19 +4,13 @@ using Unity.Entities;
 namespace GravityAttraction
 {
     [BurstCompile]
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup), OrderLast = true)]
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateAfter(typeof(CollisionHandlingSystem))]
     public partial struct BodyRemovingSystem : ISystem
     {
-        public void OnCreate(ref SystemState state)
-        {
-            
-        }
-
+        public void OnCreate(ref SystemState state) { }
         
-        public void OnDestroy(ref SystemState state)
-        {
-            
-        }
+        public void OnDestroy(ref SystemState state) { }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
@@ -26,7 +20,7 @@ namespace GravityAttraction
 
             var job = new BodyRemovingJob
             {
-                Buffer = commandBuffer
+                CommandBuffer = commandBuffer
             };
 
             job.ScheduleParallel();
