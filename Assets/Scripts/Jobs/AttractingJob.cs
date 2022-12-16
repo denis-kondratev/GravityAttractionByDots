@@ -58,7 +58,7 @@ namespace GravityAttraction
                 hasCollision = true;
                 collision.Entity = Entities[i];
             }
-
+            
             velocity.Linear += DeltaTime / mass.Value * force;
         }
         
