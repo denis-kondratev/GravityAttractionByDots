@@ -22,17 +22,17 @@ namespace GravityAttraction
         {
             var random = new Random();
             random.InitState((uint)index + 1u);
-            
+
             // Setting random mass and scale (size).
             mass.Value = random.NextFloat(WorldConfig.StartMassRange.x, WorldConfig.StartMassRange.y);
             transform.Scale = Scaling.MassToScale(mass.Value, MassToScaleRatio);
 
-            // Setting random position.
-            var radius = WorldConfig.WorldRadius - math.pow(random.NextFloat(SqrtWorldRadius), 3);
+            // Set a random position.
+            var radius = WorldConfig.WorldRadius - math.pow(random.NextFloat(SqrtWorldRadius), 2);
             var position = random.NextFloat3Direction() * radius;
             transform.Position = position;
 
-            // Setting random velocity.
+            // Set random velocity.
             var speed = random.NextFloat(WorldConfig.StartSpeedRange.x, WorldConfig.StartSpeedRange.y);
             var direction = math.normalize(new float3(-position.z, position.y / 2, position.x));
             velocity.Linear = speed * direction;

@@ -2,7 +2,7 @@
 
 namespace GravityAttraction
 {
-    public struct Mass : IComponentData
+    public struct Mass : IComponentData, IEnableableComponent
     {
         public float Value;
     }

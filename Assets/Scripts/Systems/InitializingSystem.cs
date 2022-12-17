@@ -30,8 +30,8 @@ namespace GravityAttraction
         private void InitializeWorld(ref SystemState state)
         {
             var worldConfig = SystemAPI.GetSingleton<WorldConfig>();
-            var bodyPrefab = SystemAPI.GetSingleton<BodyPrefab>().Value;
-            state.EntityManager.Instantiate(bodyPrefab, worldConfig.BodyCount, Allocator.Temp);
+            var bodyPrefab = SystemAPI.GetSingleton<BodyPrefab>();
+            state.EntityManager.Instantiate(bodyPrefab.Value, worldConfig.BodyCount, Allocator.Temp);
             var sqrtWorldRadius = math.pow(worldConfig.WorldRadius, 1f/3f);
 
             var job = new InitializingJob
