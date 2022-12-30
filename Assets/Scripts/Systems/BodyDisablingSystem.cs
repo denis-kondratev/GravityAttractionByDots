@@ -6,7 +6,7 @@ namespace GravityAttraction
     [BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateAfter(typeof(CollisionHandlingSystem))]
-    public partial struct BodyRemovingSystem : ISystem
+    public partial struct BodyDisablingSystem : ISystem
     {
         public void OnCreate(ref SystemState state) { }
         
@@ -18,7 +18,7 @@ namespace GravityAttraction
             var cbs = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var commandBuffer = cbs.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
 
-            var job = new BodyRemovingJob
+            var job = new BodyDisablingJob
             {
                 CommandBuffer = commandBuffer
             };

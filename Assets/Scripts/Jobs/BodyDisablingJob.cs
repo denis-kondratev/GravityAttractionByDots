@@ -1,11 +1,14 @@
-﻿using Unity.Entities;
+﻿using Unity.Burst;
+using Unity.Entities;
 
 namespace GravityAttraction
 {
-    public partial struct BodyRemovingJob : IJobEntity
+    [BurstCompile]
+    public partial struct BodyDisablingJob : IJobEntity
     {
         public EntityCommandBuffer.ParallelWriter CommandBuffer;
 
+        [BurstCompile]
         private void Execute([EntityIndexInQuery] int index, in Entity entity, in Mass mass)
         {
             if (mass.Value <= 0)
